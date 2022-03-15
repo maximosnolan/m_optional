@@ -14,9 +14,6 @@ Designed for C++ 20 onward
 #include <iostream>
 #include <algorithm>
 
-
-
-
 template <typename T>
 class mOptional{
 private:
@@ -59,9 +56,7 @@ public:
         return m_optional.value();
     }
     friend std::ostream& operator<< (std::ostream &out, const mOptional & m_optional) noexcept {
-        std::string output = (m_optional.has_value()) ? std::to_string(m_optional.fetch_value()) : "no value present";
-        std::cout << output; 
-        //std::cout << "Hello\n";
+        std::cout << (m_optional.has_value()) ? std::to_string(m_optional.fetch_value()) : "no value present";
         return out;
     }
 
@@ -82,7 +77,7 @@ public:
        
     }
 
-    [[no_discard]] static inline std::vector<std::vector<opt_t>> split_opt(std::vector<mOptional> &victim) const noexcept{
+    [[no_discard]] static inline std::vector<std::vector<opt_t>> split_opt(std::vector<mOptional> &victim) noexcept{
         auto cont = [](std::vector<mOptional> &victim) -> std::vector<std::vector<opt_t>> {
             std::vector<std::vector<opt_t>> ret_cont(2, std::vector<opt_t>());
             for(auto itr: victim){
