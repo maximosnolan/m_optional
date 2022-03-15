@@ -2,7 +2,7 @@
 /*
 Maximos Nolan std::optional libary
 Created: 3/13/22 
-Designed for C++ 20 onword
+Designed for C++ 20 onward
 */
 #include <optional>
 #include <variant>
