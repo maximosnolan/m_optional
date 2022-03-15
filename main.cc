@@ -15,13 +15,15 @@ Designed for C++ 20 onward
 #include <algorithm>
 
 
+
+
 template <typename T>
 class mOptional{
 private:
     std::optional<T> m_optional; 
     [[maybe_unused]] std::vector<T> *ts_container; 
 public:
-
+    using opt_t = std::variant<m_optional, std::nullopt>;
     mOptional(): m_optional{std::nullopt} {}
 
     mOptional(T value){
@@ -79,6 +81,20 @@ public:
         std::remove_if(victim.begin(), victim.end(), [](mOptional<T> v){return v.has_value();});
        
     }
+
+    [[no_discard]] static inline std::vector<std::vector<opt_t>> split_opt(std::vector<mOptional> &victim) const noexcept{
+        auto cont = [](std::vector<mOptional> &victim) -> std::vector<std::vector<opt_t>> {
+            std::vector<std::vector<opt_t>> ret_cont(2, std::vector<opt_t>());
+            for(auto itr: victim){
+                if(itr.has_value()) 
+                    ret_cont[0].push_back(itr.fetch_value());
+                else 
+                    ret_cont[1].push_back({});
+            }
+        }(victim);
+        //Do more analysis on the types of data here? *make sure m_optional is TS 
+        return cont; 
+    } 
 };
 
 int main(){
