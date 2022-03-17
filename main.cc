@@ -90,6 +90,10 @@ public:
         //Do more analysis on the types of data here? *make sure m_optional is TS 
         return cont; 
     } 
+
+    [[no_discard]] [[no_return]] static inline void m_opt_trap(const uint8_t &error_ID){
+        auto it = [](const uint8_t error_ID) -> std::optional<uint8_t> {(!error_ID) ? throw std::runtime_error("Empty container") : throw std::bad_alloc(); return {}}(error_ID)
+    }
 };
 
 int main(){
