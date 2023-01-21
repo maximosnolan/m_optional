@@ -26,11 +26,11 @@ public:
     mOptional(T value){
         m_optional = value; 
     } 
-    [[no_discard]] inline std::optional<T> unwrap_optional(){
+    [[nodiscard]] inline std::optional<T> unwrap_optional(){
         return (m_optional.has_value()) ? m_optional : std::nullopt;
     }
 
-    [[no_discard]] inline std::optional<T> wrapOptional(T value, const bool override) noexcept{
+    [[nodiscard]] inline std::optional<T> wrapOptional(T value, const bool override) noexcept{
         auto wrapped = [=](T value) -> std::optional<T> {
             return std::optional<std::reference_wrapper<T>>{value}; 
         }(value);
@@ -39,7 +39,7 @@ public:
         return wrapped;
     }
 
-    [[carries_dependency, no_discard]] inline T opt_safe_accumulate(std::vector<std::optional<T>> &victim, auto& lambda){
+    [[carries_dependency, nodiscard]] inline T opt_safe_accumulate(std::vector<std::optional<T>> &victim, auto& lambda){
         ts_container = new std::vector<T>;  
         for (auto &itr : victim){
             if (itr.has_value()) ts_container->push_back(*itr);
@@ -48,11 +48,11 @@ public:
         delete ts_container;
         return ret_val;
     }
-    [[no_discard]] const inline bool has_value() const {
+    [[nodiscard]] const inline bool has_value() const {
         return m_optional.has_value() || !*m_optional;
     }
 
-    [[no_discard]] const inline T fetch_value() const {
+    [[nodiscard]] const inline T fetch_value() const {
         return m_optional.value();
     }
     friend std::ostream& operator<< (std::ostream &out, const mOptional & m_optional) noexcept {
@@ -60,7 +60,7 @@ public:
         return out;
     }
 
-    [[no_discard]] inline float safe(std::vector<T> &victim) {
+    [[nodiscard]] inline float safe(std::vector<T> &victim) {
         if(victim.size() == 0) throw std::runtime_error("Empty container");
         auto safe = [](std::vector<T> victim) -> bool {
             for (auto & itr : victim) {
@@ -77,7 +77,7 @@ public:
        
     }
 
-    [[no_discard]] static inline std::vector<std::vector<opt_t>> split_opt(std::vector<mOptional> &victim) noexcept{
+    [[nodiscard]] static inline std::vector<std::vector<opt_t>> split_opt(std::vector<mOptional> &victim) noexcept{
         auto cont = [](std::vector<mOptional> &victim) -> std::vector<std::vector<opt_t>> {
             std::vector<std::vector<opt_t>> ret_cont(2, std::vector<opt_t>());
             for(auto itr: victim){
@@ -91,7 +91,7 @@ public:
         return cont; 
     } 
 
-    [[no_discard]] [[no_return]] static inline void m_opt_trap(const uint8_t &error_ID){
+    [[nodiscard, no_return]] static inline void m_opt_trap(const uint8_t &error_ID){
         auto it = [](const uint8_t error_ID) -> std::optional<uint8_t> {(!error_ID) ? throw std::runtime_error("Empty container") : throw std::bad_alloc(); return {}}(error_ID)
     }
 };
