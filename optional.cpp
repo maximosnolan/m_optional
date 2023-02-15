@@ -76,7 +76,7 @@ class __Optional {
         return is_active;
     }
 
-    [[nodiscard]] constexpr underlying_type unwrap_optional([[maybe_unused]] std::string & panic_msg) const {
+    [[nodiscard]] constexpr underlying_type unwrap_optional([[maybe_unused]] std::string && panic_msg) const {
         if (is_active) {
             return datum.datum;
         }
@@ -87,8 +87,5 @@ class __Optional {
     void reset() noexcept {
         is_active = false;
     }
-
-
-
 
 };
