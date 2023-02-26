@@ -12,3 +12,7 @@ tuple:
 vector:
 	echo "creating tests for vector"
 	$(CC) $(STD) $(CFLAGS) vector_tests.cpp -o genTestVector
+
+array:
+	echo "creating tests for array"
+	$(CC) $(STD) $(CFLAGS) array_tests.cpp -o genTestArray
