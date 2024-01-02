@@ -1,4 +1,4 @@
-#include "../vector.hpp"
+#include "../src/vector.hpp"
 #include <iostream>
 
 int main () {

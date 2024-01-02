@@ -1,5 +1,4 @@
 #include <cstdlib>
-#include <stdexcept>
 
 void * operator new(std::size_t n) {
     void * const p = std::malloc(n);

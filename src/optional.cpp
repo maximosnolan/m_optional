@@ -10,7 +10,6 @@ Special shoutout to Jason Turner for inspiring a good portion of this code.
 #include <stdexcept>
 #include <type_traits>
 #include <string>
-#include <iostream>
 
 template <typename underlying_type>
 struct nullopt_t {

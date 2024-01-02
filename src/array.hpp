@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include <cstdlib>
 #include <stdexcept>
 #include <type_traits>
